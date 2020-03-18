@@ -2,7 +2,7 @@ import pandas as pd
 import re
 
 
-def corta_bloco(dadger, rv):
+def corta_bloco(dadger):
 
     bloco_uh = []
     uh = re.compile("^UH.*")
@@ -15,8 +15,8 @@ def corta_bloco(dadger, rv):
     return bloco_uh
 
 
-def cria_df(dadger, rv):
-    uh = corta_bloco(dadger, rv)
+def cria_df(dadger):
+    uh = corta_bloco(dadger)
     dados = []
     colunas = ["UH", "Nº Usina", "REE", "Vol. Arm. Inicial %", "Vaz. Def. Min", "Evap", "Estágio", "Vol. Morto Inicial", "Lim. Sup. Vertimento", "Balanço Hídrico Fio D'água"]
     for linha in uh:
@@ -30,8 +30,8 @@ def cria_df(dadger, rv):
     df_uh = pd.DataFrame(dados, columns=colunas)
     return df_uh
 
-def trata_df(dadger, rv):
-    df = cria_df(dadger, rv)
+def trata_df(dadger):
+    df = cria_df(dadger)
     df.drop(["UH"], axis=1, inplace=True)
     df.set_index("Nº Usina", inplace=True)
     return df
