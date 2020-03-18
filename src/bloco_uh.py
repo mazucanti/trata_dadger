@@ -1,27 +1,22 @@
 import pandas as pd
-from pathlib import Path
 import re
 
 
-def importa_dadger():
-    # rv = int(input("Revisão atual: "))
-    rv = 1
+def corta_bloco(dadger, rv):
+
     bloco_uh = []
     uh = re.compile("^UH.*")
 
-    local_dadger = Path("DECOMP/DADGER.RV%d" % rv)
-
-    with open(local_dadger, 'r', encoding="ISO-8859-1") as dadger:
-        for linha in dadger:
-            if uh.match(linha) != None:
-                linha = linha.replace(".",",")
-                bloco_uh.append(linha)
+    for linha in dadger:
+        if uh.match(linha) != None:
+            linha = linha.replace(".",",")
+            bloco_uh.append(linha)
     
     return bloco_uh
 
 
-def cria_df():
-    uh = importa_dadger()
+def cria_df(dadger, rv):
+    uh = corta_bloco(dadger, rv)
     dados = []
     colunas = ["UH", "Nº Usina", "REE", "Vol. Arm. Inicial %", "Vaz. Def. Min", "Evap", "Estágio", "Vol. Morto Inicial", "Lim. Sup. Vertimento", "Balanço Hídrico Fio D'água"]
     for linha in uh:
@@ -35,11 +30,8 @@ def cria_df():
     df_uh = pd.DataFrame(dados, columns=colunas)
     return df_uh
 
-def trata_df():
-    df = cria_df()
+def trata_df(dadger, rv):
+    df = cria_df(dadger, rv)
     df.drop(["UH"], axis=1, inplace=True)
     df.set_index("Nº Usina", inplace=True)
     return df
-
-df = trata_df()
-df.to_csv("debug.csv")
