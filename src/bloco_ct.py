@@ -16,6 +16,6 @@ def corta_bloco(dadger):
 with open("DECOMP/DADGER.RV1", 'r', encoding="ISO-8859-1") as dadger:
     ct = corta_bloco(dadger)
 
-with open("../debug", 'w') as fp:
+with open("debug", 'w') as fp:
     for linha in ct:
         fp.write(linha)
