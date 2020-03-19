@@ -33,10 +33,3 @@ def cria_df(dadger):
         dados.append(to_df)
     df_ct = pd.DataFrame(dados, columns=colunas)
     return df_ct
-
-
-def trata_df(dadger):
-    df = cria_df(dadger)
-    df.set_index("Nº Usina", inplace=True)
-    return df
-

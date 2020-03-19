@@ -31,9 +31,5 @@ def cria_df(dadger):
                      linha[39].strip(), linha[44:46].strip()]
         dados.append(to_df)
     df_uh = pd.DataFrame(dados, columns=colunas)
+    df_uh.set_index("Nº Usina", inplace=True)
     return df_uh
-
-def trata_df(dadger):
-    df = cria_df(dadger)
-    df.set_index("Nº Usina", inplace=True)
-    return df
