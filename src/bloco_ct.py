@@ -40,7 +40,3 @@ def trata_df(dadger):
     df.set_index("Nº Usina", inplace=True)
     return df
 
-with open("DECOMP/DADGER.RV1", 'r', encoding="ISO-8859-1") as dadger:
-    ct = trata_df(dadger)
-
-ct.to_excel('debug.xls')
