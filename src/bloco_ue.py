@@ -31,3 +31,5 @@ def cria_df(dadger):
     df_ue = pd.DataFrame(dados, columns=colunas)
     df_ue.set_index("Nº Estação", inplace=True)
     return df_ue
+
+
