@@ -1,0 +1,8 @@
+PQ  SUDESTE    1    1    3954 3954 3954
+PQ  SUDESTE    1    4    5230 5230 5230
+PQ  SUL        2    1    1772 1772 1772
+PQ  SUL        2    4    1908 1908 1908
+PQ  NORDESTE   3    1    4377 4377 4377
+PQ  NORDESTE   3    4    5166 5166 5166
+PQ  NORTE      4    1     490  490  490
+PQ  NORTE      4    4     403  403  403

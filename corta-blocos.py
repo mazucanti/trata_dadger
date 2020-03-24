@@ -13,11 +13,10 @@ MN = ['TE', 'PT', 'SB', 'UH', 'CT', 'UE', 'ME', 'DP', 'CD', 'TD',
       'GS', 'NL', 'GL']
 
 local = Path("DECOMP/DADGER.RV2")
-with open(local, 'r', encoding="ISO-8859-1") as dadger:
-    for mn in MN:
-        with open('debug/%s.txt' % mn, 'w') as fp:
-            reg = re.compile("^%s.*" % mn)
-
+for mn in MN:
+    with open('debug/%s.txt' % mn, 'w') as fp:
+        reg = re.compile("^%s.*" % mn)
+        with open(local, 'r', encoding="ISO-8859-1") as dadger:
             for linha in dadger:
                 if reg.match(linha) != None:
                     linha = linha.replace(".",",")
