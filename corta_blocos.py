@@ -3,16 +3,15 @@ import pandas as pd
 from pathlib import Path
 
 
-MN = ['TE', 'SB', 'UH', 'CT', 'UE', 'DP', 'CD',
-      'PQ', 'IA', 'TX', 'GP', 'NI', 'DT', 'MP',
-      'MT', 'FD', 'VE', 'RE', 'LU', 'FU', 'FT',
-      'FI', 'VI', 'AC', 'IR', 'CI', 'FC', 'TI',
-      'RQ', 'EZ', 'HV', 'LV', 'CV', 'HQ', 'LQ', 
-      'CQ', 'AR', 'EV']
-print(len(MN))
+MN = ['AC', 'AR', 'CD', 'CI', 'CQ', 'CT', 'CV', 'DP',
+      'DT', 'EV', 'EZ', 'FC', 'FD', 'FI', 'FT', 'FU',
+      'GP', 'HQ', 'HV', 'IA', 'IR', 'LQ', 'LU', 'LV', 
+      'MP', 'MT', 'NI', 'PQ', 'RE', 'RQ', 'SB', 'TE',
+      'TI', 'TX', 'UE', 'UH', 'VE', 'VI']
+
 local = Path("DECOMP/DADGER.RV2")
 for mn in MN:
-    with open('debug/%s.txt' % mn, 'w') as fp:
+    with open('blocos/%s' % mn, 'w') as fp:
         reg = re.compile("^%s.*" % mn)
         with open(local, 'r', encoding="ISO-8859-1") as dadger:
             for linha in dadger:
