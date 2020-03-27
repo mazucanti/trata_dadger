@@ -158,3 +158,37 @@ def cria_df_cq(bloco):
 
 
 
+def cria_df_cv(bloco):
+
+    dados = []
+    colunas = ["Nº Rest Vol", "Estágio", "Nº Estação/Usina",
+               "Coef.", "Tipo Variável"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:17].strip(),
+                 linha[19:29].strip(), linha[34:38].strip()]
+        dados.append(to_df)
+
+    df_cv = pd.DataFrame(dados, columns=colunas)
+    df_cv.set_index("Nº Rest Vol", inplace=True)
+
+    local = Path('blocos/CV.xls')
+    df_cv.to_excel(local)
+
+
+def cria_df_dp(bloco):
+
+    dados = []
+    colunas = ["Estágio", "Subsistema", "Carga Pesada", "Duração Pesada",
+               "Carga Média", "Duração Média", "Carga Leve", "Duração Leve"]
+
+    for linha in bloco:
+        to_df = [linha[4:6].strip(), linha[9:11].strip(), linha[19:29].strip(),
+                 linha[29:39].strip(), linha[39:49].strip(), linha[49:59].strip(),
+                 linha[59:69].strip(), linha[69:79].strip()]
+        dados.append(to_df)
+
+    df_dp = pd.DataFrame(dados, columns=colunas)
+    
+    local = Path('blocos/DP.xls')
+    df_dp.to_excel(local)
