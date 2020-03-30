@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+import re
 
 
 import corta_blocos
@@ -192,3 +193,85 @@ def cria_df_dp(bloco):
     
     local = Path('blocos/DP.xls')
     df_dp.to_excel(local)
+
+
+def cria_df_dt(bloco):
+
+    dados = []
+    colunas = ["Dia", "Mês", "Ano"]
+
+    for linha in bloco:
+        to_df = [linha[4:6].strip(), linha[9:11].strip(), linha[14:18].strip()]
+        dados.append(to_df)
+
+    df_dt = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/DT.xls')
+    df_dt.to_excel(local)
+
+
+def cria_df_ev(bloco):
+
+    dados = []
+    colunas = ["Modelo", "Referência"]
+
+    for linha in bloco:
+        to_df = [linha[4], linha[9:12]]
+        dados.append(to_df)
+
+    df_ev = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/EV.xls')
+    df_ev.to_excel(local)
+
+
+def cria_df_ez(bloco):
+
+    dados = []
+    colunas = ["Nº Reservatório", "% Vaz. Min."]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:14].strip()]
+        dados.append(to_df)
+
+    df_ez = pd.DataFrame(dados, columns=colunas)
+    df_ez.set_index("Nº Reservatório", inplace=True)
+
+    local = Path("blocos/EZ.xls")
+    df_ez.to_excel(local)
+
+
+def cria_df_fc(bloco):
+
+    dados = []
+    colunas = ["Arquivo de Cortes", "Nome do Arquivo"]
+
+    for linha in bloco:
+        to_df = [linha[4:10].strip(), linha[14:len(linha)-1].strip()]
+        dados.append(to_df)
+
+    df_fc = pd.DataFrame(dados, columns=colunas)
+    
+    local = Path('blocos/FC.xls')
+    df_fc.to_excel(local)
+
+
+def cria_df_fd(bloco):
+
+    dados = []
+    colunas = ["Nº Usina"]
+    maximo = 0
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip()] + re.findall(".,...", linha)
+        fatores = len(to_df) - 1
+        maximo = fatores if fatores >= maximo else maximo
+        dados.append(to_df)
+
+    for i in range(maximo):
+        colunas += ["Fator Estágio %d" % i]
+    df_fd = pd.DataFrame(dados, columns=colunas)
+    df_fd.set_index("Nº Usina", inplace=True)
+
+    local = Path('blocos/FD.xls')
+    df_fd.to_excel(local)
