@@ -88,8 +88,8 @@ def cria_df_uh(bloco):
 # def cria_df_ac(bloco):
 
 #     dados = []
-#     colunas = ["Nº Usina", "Id Param Mod", "Novo Valor Param",
-#                "Mês de Alt.",  "Nº Semana", "Ano Alt"]
+#     colunas_ini = ["Nº Usina", "Id Param Mod", "Parâmetros", "Parâmetros"]
+#     colunas_fin = "Mês de Alt.",  "Nº Semana", "Ano Alt"]
     
 #     for linha in bloco:
 #         print(len(linha))
@@ -275,3 +275,159 @@ def cria_df_fd(bloco):
 
     local = Path('blocos/FD.xls')
     df_fd.to_excel(local)
+
+
+def cria_df_fi(bloco):
+
+    dados = []
+    colunas = ["Nº Restrição", "Estágio", "DE", "PARA", "Fator Participação"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip(),
+                 linha[19:21].strip(), linha[24:34].strip()]
+        dados.append(to_df)
+
+    df_fi = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/FI.xls')
+    df_fi.to_excel(local)
+
+
+def cria_df_ft(bloco):
+
+    dados = []
+    colunas = ["Nº Restrição", "Estágio", "Nº Térmica", "Subsistema",
+               "Fator Particip."]
+    
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:17].strip(),
+                 linha[19:21].strip(), linha[24:34].strip()]
+        dados.append(to_df)
+
+    df_ft = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/FT.xls')
+    df_ft.to_excel(local)
+
+
+def cria_df_fu(bloco):
+    
+    dados = []
+    colunas = ["Nº Restrição", "Estágio", "Nº Usina", "Fator Particip."]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:17].strip(),
+                 linha[19:29].strip()]
+        dados.append(to_df)
+    
+    df_fu = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/FU.xls')
+    df_fu.to_excel(local)
+
+
+
+def cria_df_gp(bloco):
+
+    dados = []
+    colunas = ["Tolerância Convergência"]
+
+    for linha in bloco:
+        dados.append(linha[4:14].strip())
+
+    df_gp = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/GP.xls')
+    df_gp.to_excel(local)
+
+
+def cria_df_hq(bloco):
+    
+    dados = []
+    colunas = ["Nº Restrição", "Estágio Inicial", "Estágio Final"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip()]
+        dados.append(to_df)
+
+    df_hq = pd.DataFrame(dados, columns=colunas)
+    df_hq.set_index("Nº Restrição", inplace=True)
+
+    local = Path('blocos/HQ.xls')
+    df_hq.to_excel(local)
+
+
+def cria_df_hv(bloco):
+    
+    dados = []
+    colunas = ["Nº Restrição", "Eságio Inicial", "Estágio Final"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip()]
+        dados.append(to_df)
+
+    df_hv = pd.DataFrame(dados, columns=colunas)
+    df_hv.set_index("Nº Restrição", inplace=True)
+
+    local = Path('blocos/HV.xls')
+    df_hv.to_excel(local)
+
+
+def cria_df_ia(bloco):
+    
+    dados = []
+    colunas = ["Estágio", "Subsistema I", "Subsistema J", "Ind. Penalidade",
+               "Cap. Max. I para J Pesada", "Cap. Max. J para I Pesada",
+               "Cap. Max. I para J Média", "Cap. Max. J para I Média",
+               "Cap. Max. I para J Leve", "Cap. Max. J para I Leve"]
+    
+    for linha in bloco:
+        to_df = [linha[4:6].strip(), linha[9:11].strip(), linha[14:16].strip(), linha[17],
+                 linha[19:29].strip(), linha[29:39].strip(), linha[39:49].strip(),
+                 linha[49:59].strip(), linha[59:69].strip(), linha[69:79].strip()]
+        dados.append(to_df)
+
+    df_ia = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/IA.xls')
+    df_ia.to_excel(local)
+
+
+def cria_df_ir(bloco):
+    
+    dados = []
+    colunas = ["Id. Saída", "Opç. Impressão", "Max. Pág."]
+
+    for linha in bloco:
+        opt_saida = linha[4:11].strip()
+        if opt_saida == "NORMAL":
+            to_df = [opt_saida, linha[14:16].strip(), linha[19:21].strip()]
+        elif opt_saida == "ACOPLA":
+            to_df = [opt_saida, linha[14:16].strip(), None]
+        else:
+            to_df = [opt_saida, None, None]
+        dados.append(to_df)
+
+    df_ir = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/IR.xls')
+    df_ir.to_excel(local)
+
+
+def cria_df_lq(bloco):
+
+    dados = []
+    colunas = ["Nº Rest. Vaz.", "Estágio", 
+               "LI Pesada", "LS Pesada", "LI Média",
+               "LS Média", "LI Leve", "LS Leve"]
+    
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:24].strip(),
+                 linha[24:34].strip(), linha[34:44].strip(), linha[44:54].strip(),
+                 linha[54:64].strip(), linha[64:74].strip()]
+        dados.append(to_df)
+
+    df_lq = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/LQ.xls')
+    df_lq.to_excel(local)
