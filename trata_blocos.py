@@ -269,7 +269,7 @@ def cria_df_fd(bloco):
         dados.append(to_df)
 
     for i in range(maximo):
-        colunas += ["Fator Estágio %d" % i]
+        colunas += ["Fator Estágio %d" % (i+1)]
     df_fd = pd.DataFrame(dados, columns=colunas)
     df_fd.set_index("Nº Usina", inplace=True)
 
@@ -431,3 +431,118 @@ def cria_df_lq(bloco):
 
     local = Path('blocos/LQ.xls')
     df_lq.to_excel(local)
+
+
+def cria_df_lu(bloco):
+
+    dados = []
+    colunas = ["Nº Restrição", "Estágio",
+               "LI Pat. 1", "LS Pat. 1", "LI Pat. 2",
+               "LS Pat. 2", "LI Pat. 3", "LS Pat. 3"]
+    
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(),
+                 linha[14:24].strip(), linha[24:34].strip(), linha[34:44].strip(),
+                 linha[44:54].strip(), linha[54:64].strip(), linha[64:74].strip()]
+        dados.append(to_df)
+
+    df_lu = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/LU.xls')
+    df_lu.to_excel(local)
+
+
+def cria_df_lv(bloco):
+
+    dados = []
+    colunas = ["Nº Rest. Vol,", "Estágio", "LI", "LS"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:24].strip(),
+                 linha[24:34].strip()]
+        dados.append(to_df)
+
+    df_lv = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/LV.xls')
+    df_lv.to_excel(local)
+
+
+def cria_df_mp(bloco):
+    
+    dados = []
+    colunas = ["Nº Usina"]
+    maximo = 0
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip()] + re.findall(".,...", linha)
+        fatores = len(to_df) - 1
+        maximo = fatores if fatores >= maximo else maximo
+        dados.append(to_df)
+
+    for i in range(maximo):
+        colunas += ["Fator Man. Estágio %d" % (i+1)]
+
+    df_mp = pd.DataFrame(dados, columns=colunas)
+    df_mp.set_index("Nº Usina", inplace=True)
+
+    local = Path('blocos/MP.xls')
+    df_mp.to_excel(local)
+
+
+def cria_df_mt(bloco):
+
+    dados = []
+    colunas = ["Nº Usina", "Subsistema"]
+    maximo = 0
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip()] + re.findall(".,...", linha)
+        fatores = len(to_df) - 2
+        maximo = fatores if fatores >= maximo else maximo
+        dados.append(to_df)
+
+    for i in range(maximo):
+        colunas += ["Fator Man. Estágio %d" % (i+1)]
+
+    df_mt = pd.DataFrame(dados, columns=colunas)
+    df_mt.set_index("Nº Usina", inplace=True)
+
+    local = Path('blocos/MT.xls')
+    df_mt.to_excel(local)
+
+
+def cria_df_ni(bloco):
+
+    dados = []
+    colunas = ["Nº Iterações", "Max/Min"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), None]
+        dados.append(to_df)
+
+    df_ni = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/NI.xls')
+    df_ni.to_excel(local)
+
+
+def cria_df_pq(bloco):
+    
+    dados = []
+    colunas = ["Nome Usina", "Subsistema", "Estágio", "Ger. Pat. 1",
+               "Ger. Pat. 2", "Ger. Pat. 3"]
+
+    for linha in bloco:
+        to_df = [linha[4:14].strip(), linha[14:16].strip(), linha[19:21].strip(),
+                 linha[24:29].strip(), linha[29:34].strip(), linha[34:39].strip()]
+        dados.append(to_df)
+
+    df_pq = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/PQ.xls')
+    df_pq.to_excel(local)
+
+
+def cria_df_re(bloco):
+    pass
