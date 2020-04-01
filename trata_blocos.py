@@ -545,4 +545,84 @@ def cria_df_pq(bloco):
 
 
 def cria_df_re(bloco):
+    
+    dados = []
+    colunas = ["Nº Restrição", "Estágio Inicial", "Estágio Final"]
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip()]
+        dados.append(to_df)
+
+    df_re = pd.DataFrame(dados, columns=colunas)
+    df_re.set_index("Nº Restrição", inplace=True)
+
+    local = Path('blocos/RE.xls')
+    df_re.to_excel(local)
+
+
+def cria_df_rq(bloco):
+    pass
+
+
+def cria_df_te(bloco):
+
+    dados = []
+    colunas = ["Título"]
+
+    for linha in bloco:
+        to_df = [linha[4:84].strip()]
+        dados.append(to_df)
+
+    df_te = pd.DataFrame(dados, columns=colunas)
+
+    local = Path('blocos/TE.xls')
+    df_te.to_excel(local)
+
+
+def cria_df_ti(bloco):
+
+    dados = []
+    colunas = ["Nº Usina"]
+    maximo = 0
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip()] + re.findall("[0-9]{1,2},[0-9]", linha)
+        fatores = len(to_df) - 1
+        maximo = fatores if fatores >= maximo else maximo
+        dados.append(to_df)
+
+    for i in range(maximo):
+        colunas += ["Vaz. Desv. Estágio %d" % (i+1)]
+
+    df_ti = pd.DataFrame(dados, columns=colunas)
+    df_ti.set_index("Nº Usina", inplace=True)
+
+    local = Path('blocos/TI.xls')
+    df_ti.to_excel(local)
+
+
+def cria_df_ve(bloco):
+
+    dados = []
+    colunas = ["Nº Usina"]
+    maximo = 0
+
+    for linha in bloco:
+        to_df = [linha[4:7].strip()] + re.findall("[0-9]{1,2},[0-9]{2}|[0-9]{3},0",
+                                                  linha)
+        fatores = len(to_df) - 1
+        maximo = fatores if fatores >= maximo else maximo
+        dados.append(to_df)
+
+    for i in range(maximo):
+        colunas += ["Vol. Esp. Estágio %d" % (i+1)]
+
+    df_ve = pd.DataFrame(dados, columns=colunas)
+    df_ve.set_index("Nº Usina", inplace=True)
+
+    local = Path('blocos/VE.xls')
+    df_ve.to_excel(local)
+
+
+def cria_df_vi(bloco):
     pass
