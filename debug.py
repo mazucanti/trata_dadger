@@ -20,12 +20,15 @@ MN = ['AC', 'AR', 'CD', 'CI', 'CQ',
       'UH', 'VE', 'VI']
 
 
-for i in range(len(MN)):
-    entrada = Path("bloco/%s" % MN[i])
-    try:
+for i, func in enumerate(funcs):
+    entrada = Path("blocos/%s" % MN[i])
+    if entrada.is_file():
         with open(entrada, 'r') as bloco:
-            df = funcs[i](bloco)
-            saida = Path("bloco/%s.xls" % MN[i])
-            df.to_excel(saida)
-    except FileNotFoundError:
+            df = func(bloco)
+            saida = Path("blocos/%s.xls" % MN[i])
+            if df.empty:
+                continue
+            else:
+                df.to_excel(saida)
+    else:
         continue

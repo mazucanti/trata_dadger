@@ -216,7 +216,7 @@ def cria_df_cd(bloco):
     return df
 
 def cria_df_ci(bloco):
-    pass
+    return pd.DataFrame()
 
 
 def cria_df_cq(bloco):
@@ -290,7 +290,10 @@ def cria_df_ev(bloco):
     colunas = ["Modelo", "Referência"]
 
     for linha in bloco:
-        to_df = [linha[4], linha[9:12]]
+        if len(linha) != 0:
+            to_df = [linha[4], linha[9:12]]
+        else:
+            to_df = [None, None]
         dados.append(to_df)
 
     df = pd.DataFrame(dados, columns=colunas)
@@ -447,9 +450,12 @@ def cria_df_ia(bloco):
                "Cap. Max. I para J Leve", "Cap. Max. J para I Leve"]
     
     for linha in bloco:
-        to_df = [linha[4:6].strip(), linha[9:11].strip(), linha[14:16].strip(), linha[17],
-                 linha[19:29].strip(), linha[29:39].strip(), linha[39:49].strip(),
-                 linha[49:59].strip(), linha[59:69].strip(), linha[69:79].strip()]
+        if len(linha) != 0:
+            to_df = [linha[4:6].strip(), linha[9:11].strip(), linha[14:16].strip(), linha[17],
+                    linha[19:29].strip(), linha[29:39].strip(), linha[39:49].strip(),
+                    linha[49:59].strip(), linha[59:69].strip(), linha[69:79].strip()]
+        else:
+            to_df = [None] * len(colunas)
         dados.append(to_df)
 
     df = pd.DataFrame(dados, columns=colunas)
@@ -618,11 +624,11 @@ def cria_df_re(bloco):
     return df
 
 def cria_df_rq(bloco):
-    pass
+    return pd.DataFrame()
 
 
 def cria_df_tx(bloco):
-    pass
+    return pd.DataFrame()
 
 
 def cria_df_te(bloco):
@@ -683,5 +689,5 @@ def cria_df_ve(bloco):
     return df
 
 def cria_df_vi(bloco):
-    pass
+    return pd.DataFrame()
 
