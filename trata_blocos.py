@@ -22,11 +22,11 @@ def cria_df_ct(bloco):
                 linha[69:74].strip(), linha[74:79].strip(), linha[79:89].strip()]
         dados.append(to_df)
 
-    df_ct = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
     
-    local = Path('blocos/CT.xls')
-    df_ct.to_excel(local)
-
+    
+    return df
 
 def cria_df_sb(bloco):
 
@@ -37,12 +37,10 @@ def cria_df_sb(bloco):
         to_df = [linha[4:6], linha[9:11]]
         dados.append(to_df)
 
-    df_sb = pd.DataFrame(dados, columns=colunas)
-    df_sb.set_index("Sub Sistema", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Sub Sistema", inplace=True)
 
-    local = Path("blocos/SB.xls")
-    df_sb.to_excel(local)
-
+    return df
 
 def cria_df_ue(bloco):
 
@@ -55,11 +53,11 @@ def cria_df_ue(bloco):
                 linha[29:32], linha[34:37], linha[39:49],
                 linha[49:59], linha[59:69]]
         dados.append(to_df)
-    df_ue = pd.DataFrame(dados, columns=colunas)
-    df_ue.set_index("Nº Estação", inplace=True)
-    local = Path("blocos/UE.xls")
-    df_ue.to_excel(local)
 
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Estação", inplace=True)
+
+    return df
 
 def cria_df_uh(bloco):
 
@@ -78,28 +76,111 @@ def cria_df_uh(bloco):
                     linha[39].strip(), linha[44:46].strip()]
         dados.append(to_df)
 
-    df_uh = pd.DataFrame(dados, columns=colunas)
-    df_uh.set_index("Nº Usina", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
 
-    local = Path("blocos/UH.xls")
-    df_uh.to_excel(local)
+    return df
 
-
-# def cria_df_ac(bloco):
-
-#     dados = []
-#     colunas_ini = ["Nº Usina", "Id Param Mod", "Parâmetros", "Parâmetros"]
-#     colunas_fin = "Mês de Alt.",  "Nº Semana", "Ano Alt"]
+def cria_df_ac(bloco):
     
-#     for linha in bloco:
-#         print(len(linha))
+    dados = []
+    colunas = ["Nº Usina", "Id Param Mod", "Parâmetro", "Parâmetro",
+                   "Mês de Alt.",  "Nº Semana", "Ano Alt"]
+    
+    for linha in bloco:
+        to_df = [linha[4:7].strip(), linha[9:15].strip]
+        if to_df[1] == "NOMEUH":
+            to_df += [linha[19:31].strip(), None]
 
-#     df_ac = pd.DataFrame(dados, columns=colunas)
-#     df_ac.set_index("Nº Usina", inplace=True)
+        elif to_df[1] == "NUMPOS":
+            continue
 
-#     local = Path('blocos/AC.xls')
-#     df_ac.to_excel(local)
+        elif to_df[1] == "NUMJUS":
+            continue
 
+        elif to_df[1] == "DESVIO":
+            continue
+
+        elif to_df[1] == "VOLMIN":
+            continue
+
+        elif to_df[1] == "VOLMAX":
+            continue
+
+        elif to_df[1] == "COTVOL":
+            continue
+
+        elif to_df[1] == "COTARE":
+            continue
+
+        elif to_df[1] == "COFEVA":
+            continue
+
+        elif to_df[1] == "NUMCON":
+            continue
+
+        elif to_df[1] == "NUMMAQ":
+            continue
+
+        elif to_df[1] == "POTEFE":
+            continue
+
+        elif to_df[1] == "ALTEFE":
+            continue
+
+        elif to_df[1] == "VAZEFE":
+            continue
+
+        elif to_df[1] == "PROESP":
+            continue
+
+        elif to_df[1] == "PERHID":
+            continue
+
+        elif to_df[1] == "NCHAVE":
+            continue
+
+        elif to_df[1] == "COTVAZ":
+            continue
+
+        elif to_df[1] == "JUSMED":
+            continue
+
+        elif to_df[1] == "VERTJU":
+            continue
+
+        elif to_df[1] == "VAZMIN":
+            continue
+
+        elif to_df[1] == "NUMBAS":
+            continue
+
+        elif to_df[1] == "TIPTUR":
+            continue
+
+        elif to_df[1] == "TIPERH":
+            continue
+
+        elif to_df[1] == "VAZCCF":
+            continue
+
+        elif to_df[1] == "JUSENA":
+            continue
+
+        elif to_df[1] == "VSVERT":
+            continue
+
+        elif to_df[1] == "VMDESV":
+            continue
+
+        elif to_df[1] == "TIPUSI":
+            continue
+
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
+
+    
+    return df
 
 def cria_df_ar(bloco):
 
@@ -110,11 +191,10 @@ def cria_df_ar(bloco):
         to_df = [linha[5:8].strip(), None, None]
         dados.append(to_df)
     
-    df_ar = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
     
-    local = Path('blocos/AR.xls')
-    df_ar.to_excel(local)
-
+    
+    return df
 
 def cria_df_cd(bloco):
     
@@ -130,11 +210,10 @@ def cria_df_cd(bloco):
                  linha[64:74].strip()]
         dados.append(to_df)
 
-    df_cd = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/CD.xls')
-    df_cd.to_excel(local)
-
+    
+    return df
 
 def cria_df_ci(bloco):
     pass
@@ -151,13 +230,11 @@ def cria_df_cq(bloco):
                  linha[19:29].strip(), linha[34:38].strip()]
         dados.append(to_df)
     
-    df_cq = pd.DataFrame(dados, columns=colunas)
-    df_cq.set_index("Nº Restr. Vaz.", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restr. Vaz.", inplace=True)
 
-    local = Path('blocos/CQ.xls')
-    df_cq.to_excel(local)
-
-
+    
+    return df
 
 def cria_df_cv(bloco):
 
@@ -170,12 +247,11 @@ def cria_df_cv(bloco):
                  linha[19:29].strip(), linha[34:38].strip()]
         dados.append(to_df)
 
-    df_cv = pd.DataFrame(dados, columns=colunas)
-    df_cv.set_index("Nº Rest Vol", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Rest Vol", inplace=True)
 
-    local = Path('blocos/CV.xls')
-    df_cv.to_excel(local)
-
+    
+    return df
 
 def cria_df_dp(bloco):
 
@@ -189,11 +265,10 @@ def cria_df_dp(bloco):
                  linha[59:69].strip(), linha[69:79].strip()]
         dados.append(to_df)
 
-    df_dp = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
     
-    local = Path('blocos/DP.xls')
-    df_dp.to_excel(local)
-
+    
+    return df
 
 def cria_df_dt(bloco):
 
@@ -204,11 +279,10 @@ def cria_df_dt(bloco):
         to_df = [linha[4:6].strip(), linha[9:11].strip(), linha[14:18].strip()]
         dados.append(to_df)
 
-    df_dt = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/DT.xls')
-    df_dt.to_excel(local)
-
+    
+    return df
 
 def cria_df_ev(bloco):
 
@@ -219,11 +293,10 @@ def cria_df_ev(bloco):
         to_df = [linha[4], linha[9:12]]
         dados.append(to_df)
 
-    df_ev = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/EV.xls')
-    df_ev.to_excel(local)
-
+    
+    return df
 
 def cria_df_ez(bloco):
 
@@ -234,12 +307,10 @@ def cria_df_ez(bloco):
         to_df = [linha[4:7].strip(), linha[9:14].strip()]
         dados.append(to_df)
 
-    df_ez = pd.DataFrame(dados, columns=colunas)
-    df_ez.set_index("Nº Reservatório", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Reservatório", inplace=True)
 
-    local = Path("blocos/EZ.xls")
-    df_ez.to_excel(local)
-
+    return df
 
 def cria_df_fc(bloco):
 
@@ -250,11 +321,10 @@ def cria_df_fc(bloco):
         to_df = [linha[4:10].strip(), linha[14:len(linha)-1].strip()]
         dados.append(to_df)
 
-    df_fc = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
     
-    local = Path('blocos/FC.xls')
-    df_fc.to_excel(local)
-
+    
+    return df
 
 def cria_df_fd(bloco):
 
@@ -270,12 +340,11 @@ def cria_df_fd(bloco):
 
     for i in range(maximo):
         colunas += ["Fator Estágio %d" % (i+1)]
-    df_fd = pd.DataFrame(dados, columns=colunas)
-    df_fd.set_index("Nº Usina", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
 
-    local = Path('blocos/FD.xls')
-    df_fd.to_excel(local)
-
+    
+    return df
 
 def cria_df_fi(bloco):
 
@@ -287,11 +356,11 @@ def cria_df_fi(bloco):
                  linha[19:21].strip(), linha[24:34].strip()]
         dados.append(to_df)
 
-    df_fi = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição")
 
-    local = Path('blocos/FI.xls')
-    df_fi.to_excel(local)
-
+    
+    return df
 
 def cria_df_ft(bloco):
 
@@ -304,11 +373,11 @@ def cria_df_ft(bloco):
                  linha[19:21].strip(), linha[24:34].strip()]
         dados.append(to_df)
 
-    df_ft = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição")
 
-    local = Path('blocos/FT.xls')
-    df_ft.to_excel(local)
-
+    
+    return df
 
 def cria_df_fu(bloco):
     
@@ -320,12 +389,11 @@ def cria_df_fu(bloco):
                  linha[19:29].strip()]
         dados.append(to_df)
     
-    df_fu = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição")
 
-    local = Path('blocos/FU.xls')
-    df_fu.to_excel(local)
-
-
+    
+    return df
 
 def cria_df_gp(bloco):
 
@@ -335,11 +403,10 @@ def cria_df_gp(bloco):
     for linha in bloco:
         dados.append(linha[4:14].strip())
 
-    df_gp = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/GP.xls')
-    df_gp.to_excel(local)
-
+    
+    return df
 
 def cria_df_hq(bloco):
     
@@ -350,12 +417,11 @@ def cria_df_hq(bloco):
         to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip()]
         dados.append(to_df)
 
-    df_hq = pd.DataFrame(dados, columns=colunas)
-    df_hq.set_index("Nº Restrição", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição", inplace=True)
 
-    local = Path('blocos/HQ.xls')
-    df_hq.to_excel(local)
-
+    
+    return df
 
 def cria_df_hv(bloco):
     
@@ -366,12 +432,11 @@ def cria_df_hv(bloco):
         to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip()]
         dados.append(to_df)
 
-    df_hv = pd.DataFrame(dados, columns=colunas)
-    df_hv.set_index("Nº Restrição", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição", inplace=True)
 
-    local = Path('blocos/HV.xls')
-    df_hv.to_excel(local)
-
+    
+    return df
 
 def cria_df_ia(bloco):
     
@@ -387,11 +452,10 @@ def cria_df_ia(bloco):
                  linha[49:59].strip(), linha[59:69].strip(), linha[69:79].strip()]
         dados.append(to_df)
 
-    df_ia = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/IA.xls')
-    df_ia.to_excel(local)
-
+    
+    return df
 
 def cria_df_ir(bloco):
     
@@ -408,16 +472,15 @@ def cria_df_ir(bloco):
             to_df = [opt_saida, None, None]
         dados.append(to_df)
 
-    df_ir = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/IR.xls')
-    df_ir.to_excel(local)
-
+    
+    return df
 
 def cria_df_lq(bloco):
 
     dados = []
-    colunas = ["Nº Rest. Vaz.", "Estágio", 
+    colunas = ["Nº Restrição", "Estágio", 
                "LI Pesada", "LS Pesada", "LI Média",
                "LS Média", "LI Leve", "LS Leve"]
     
@@ -427,11 +490,11 @@ def cria_df_lq(bloco):
                  linha[54:64].strip(), linha[64:74].strip()]
         dados.append(to_df)
 
-    df_lq = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição")
 
-    local = Path('blocos/LQ.xls')
-    df_lq.to_excel(local)
-
+    
+    return df
 
 def cria_df_lu(bloco):
 
@@ -446,27 +509,26 @@ def cria_df_lu(bloco):
                  linha[44:54].strip(), linha[54:64].strip(), linha[64:74].strip()]
         dados.append(to_df)
 
-    df_lu = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição")
 
-    local = Path('blocos/LU.xls')
-    df_lu.to_excel(local)
-
+    return df
 
 def cria_df_lv(bloco):
 
     dados = []
-    colunas = ["Nº Rest. Vol,", "Estágio", "LI", "LS"]
+    colunas = ["Nº Restrição", "Estágio", "LI", "LS"]
 
     for linha in bloco:
         to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:24].strip(),
                  linha[24:34].strip()]
         dados.append(to_df)
 
-    df_lv = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição")
 
-    local = Path('blocos/LV.xls')
-    df_lv.to_excel(local)
-
+    
+    return df
 
 def cria_df_mp(bloco):
     
@@ -483,12 +545,11 @@ def cria_df_mp(bloco):
     for i in range(maximo):
         colunas += ["Fator Man. Estágio %d" % (i+1)]
 
-    df_mp = pd.DataFrame(dados, columns=colunas)
-    df_mp.set_index("Nº Usina", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
 
-    local = Path('blocos/MP.xls')
-    df_mp.to_excel(local)
-
+    
+    return df
 
 def cria_df_mt(bloco):
 
@@ -505,12 +566,11 @@ def cria_df_mt(bloco):
     for i in range(maximo):
         colunas += ["Fator Man. Estágio %d" % (i+1)]
 
-    df_mt = pd.DataFrame(dados, columns=colunas)
-    df_mt.set_index("Nº Usina", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
 
-    local = Path('blocos/MT.xls')
-    df_mt.to_excel(local)
-
+    
+    return df
 
 def cria_df_ni(bloco):
 
@@ -521,11 +581,10 @@ def cria_df_ni(bloco):
         to_df = [linha[4:7].strip(), None]
         dados.append(to_df)
 
-    df_ni = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/NI.xls')
-    df_ni.to_excel(local)
-
+    
+    return df
 
 def cria_df_pq(bloco):
     
@@ -538,11 +597,10 @@ def cria_df_pq(bloco):
                  linha[24:29].strip(), linha[29:34].strip(), linha[34:39].strip()]
         dados.append(to_df)
 
-    df_pq = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/PQ.xls')
-    df_pq.to_excel(local)
-
+    
+    return df
 
 def cria_df_re(bloco):
     
@@ -553,14 +611,17 @@ def cria_df_re(bloco):
         to_df = [linha[4:7].strip(), linha[9:11].strip(), linha[14:16].strip()]
         dados.append(to_df)
 
-    df_re = pd.DataFrame(dados, columns=colunas)
-    df_re.set_index("Nº Restrição", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Restrição", inplace=True)
 
-    local = Path('blocos/RE.xls')
-    df_re.to_excel(local)
-
+    
+    return df
 
 def cria_df_rq(bloco):
+    pass
+
+
+def cria_df_tx(bloco):
     pass
 
 
@@ -573,11 +634,10 @@ def cria_df_te(bloco):
         to_df = [linha[4:84].strip()]
         dados.append(to_df)
 
-    df_te = pd.DataFrame(dados, columns=colunas)
+    df = pd.DataFrame(dados, columns=colunas)
 
-    local = Path('blocos/TE.xls')
-    df_te.to_excel(local)
-
+    
+    return df
 
 def cria_df_ti(bloco):
 
@@ -594,12 +654,11 @@ def cria_df_ti(bloco):
     for i in range(maximo):
         colunas += ["Vaz. Desv. Estágio %d" % (i+1)]
 
-    df_ti = pd.DataFrame(dados, columns=colunas)
-    df_ti.set_index("Nº Usina", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
 
-    local = Path('blocos/TI.xls')
-    df_ti.to_excel(local)
-
+    
+    return df
 
 def cria_df_ve(bloco):
 
@@ -617,12 +676,12 @@ def cria_df_ve(bloco):
     for i in range(maximo):
         colunas += ["Vol. Esp. Estágio %d" % (i+1)]
 
-    df_ve = pd.DataFrame(dados, columns=colunas)
-    df_ve.set_index("Nº Usina", inplace=True)
+    df = pd.DataFrame(dados, columns=colunas)
+    df.set_index("Nº Usina", inplace=True)
 
-    local = Path('blocos/VE.xls')
-    df_ve.to_excel(local)
-
+    
+    return df
 
 def cria_df_vi(bloco):
     pass
+
