@@ -22,7 +22,10 @@ MN = ['AC', 'AR', 'CD', 'CI', 'CQ',
 
 for i in range(len(MN)):
     entrada = Path("bloco/%s" % MN[i])
-    with open(entrada, 'r') as bloco:
-        df = funcs[i](bloco)
-        saida = Path("bloco/%s.xls" % MN[i])
-        df.to_excel(saida)
+    try:
+        with open(entrada, 'r') as bloco:
+            df = funcs[i](bloco)
+            saida = Path("bloco/%s.xls" % MN[i])
+            df.to_excel(saida)
+    except FileNotFoundError:
+        continue
