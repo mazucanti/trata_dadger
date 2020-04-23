@@ -1,5 +1,11 @@
 import trata_blocos as tb
+import pandas as pd
 from pathlib import Path
+import corta_blocos
+
+rv = int(input("Digite a revisão do DADGER que deve ser tratada: "))
+
+corta_blocos.main(rv)
 
 funcs = [tb.cria_df_ac, tb.cria_df_ar, tb.cria_df_cd, tb.cria_df_ci, tb.cria_df_cq,
          tb.cria_df_ct, tb.cria_df_cv, tb.cria_df_dp, tb.cria_df_dt, tb.cria_df_ev,
@@ -19,16 +25,16 @@ MN = ['AC', 'AR', 'CD', 'CI', 'CQ',
       'SB', 'TE', 'TI', 'TX', 'UE',
       'UH', 'VE', 'VI']
 
-
-for i, func in enumerate(funcs):
-    entrada = Path("blocos/%s" % MN[i])
-    if entrada.is_file():
-        with open(entrada, 'r') as bloco:
-            df = func(bloco)
-            saida = Path("blocos/%s.xls" % MN[i])
-            if df.empty:
-                continue
-            else:
-                df.to_excel(saida)
-    else:
-        continue
+saida = Path("DADGER_RV%d.xls" % rv)
+with pd.ExcelWriter(saida) as writer:
+    for i, func in enumerate(funcs):
+        entrada = Path("blocos/%s" % MN[i])
+        if entrada.is_file():
+            with open(entrada, 'r') as bloco:
+                df = func(bloco)
+                if df.empty:
+                    continue
+                else:
+                    df.to_excel(writer, sheet_name = MN[i])
+        else:
+            continue

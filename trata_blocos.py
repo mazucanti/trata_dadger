@@ -3,9 +3,6 @@ from pathlib import Path
 import re
 
 
-import corta_blocos
-
-
 def cria_df_ct(bloco):
 
     dados = []
@@ -88,94 +85,97 @@ def cria_df_ac(bloco):
                    "Mês de Alt.",  "Nº Semana", "Ano Alt"]
     
     for linha in bloco:
-        to_df = [linha[4:7].strip(), linha[9:15].strip]
+        to_df = [linha[4:7].strip(), linha[9:15].strip()]
         if to_df[1] == "NOMEUH":
             to_df += [linha[19:31].strip(), None]
 
         elif to_df[1] == "NUMPOS":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "NUMJUS":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "DESVIO":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:34].strip()]
 
         elif to_df[1] == "VOLMIN":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "VOLMAX":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "COTVOL":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:39].strip()]
 
         elif to_df[1] == "COTARE":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:39].strip()]
 
         elif to_df[1] == "COFEVA":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:29].strip()]
 
         elif to_df[1] == "NUMCON":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "NUMMAQ":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:29].strip()]
 
         elif to_df[1] == "POTEFE":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:34].strip()]
 
         elif to_df[1] == "ALTEFE":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:34].strip()]
 
         elif to_df[1] == "VAZEFE":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:29].strip()]
 
         elif to_df[1] == "PROESP":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "PERHID":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "NCHAVE":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:34].strip()]
 
         elif to_df[1] == "COTVAZ":
-            continue
+            to_df += [linha[19:24].strip(), linha[24:29].strip(), linha[29:44].strip()]
 
         elif to_df[1] == "JUSMED":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "VERTJU":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "VAZMIN":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "NUMBAS":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "TIPTUR":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "TIPERH":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "VAZCCF":
-            continue
+            to_df += [linha[19:29].strip(), linha[29:34].strip(), linha[34:44].strip()]
 
         elif to_df[1] == "JUSENA":
-            continue
+            to_df += [linha[19:24].strip(), None]
 
         elif to_df[1] == "VSVERT":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "VMDESV":
-            continue
+            to_df += [linha[19:29].strip(), None]
 
         elif to_df[1] == "TIPUSI":
             continue
 
+        if len(linha) >= 76: to_df += [linha[69:72].strip(), linha[75], linha[76:80].strip()]
+        else: to_df += [None] * 3
+        dados.append(to_df)
     df = pd.DataFrame(dados, columns=colunas)
     df.set_index("Nº Usina", inplace=True)
 
