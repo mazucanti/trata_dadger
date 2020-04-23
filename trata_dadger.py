@@ -1,7 +1,7 @@
-import trata_blocos as tb
+from src import trata_blocos as tb
 import pandas as pd
 from pathlib import Path
-import corta_blocos
+from src import corta_blocos
 
 rv = int(input("Digite a revisão do DADGER que deve ser tratada: "))
 
